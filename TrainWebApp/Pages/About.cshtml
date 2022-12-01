@@ -1,0 +1,29 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Train Watch";
+}
+
+
+
+<h1>About Us!</h1>
+
+
+@if(Model.Version == null) 
+{
+    <p>Build unknown</p>
+}
+
+else
+{
+    <p>
+        This Train's Database Version:
+        @Model.Version.Major 
+        @Model.Version.Minor
+        @Model.Version.Build
+        - was released on @Model.Version.ReleaseDate.ToShortDateString()
+    </p> 
+
+
+}
+

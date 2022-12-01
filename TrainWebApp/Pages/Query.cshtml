@@ -1,0 +1,71 @@
+﻿@page "{SearchArg?}/{RailCarTypeID?}"
+@model TrainWebApp.Pages.QueryModel
+@{
+}
+<h1>Queries for Train Watch</h1>
+<p></p>
+<form method="post">
+
+    <label>
+        Search by ID:
+        <select asp-for="RailCarTypeID">
+               <option value="0"> select... </option>
+               @foreach (var item in Model.RailCarInfo)
+               {
+                if (item.RailCarTypeID == Model.RailCarTypeID)
+                {
+                    <option value="@item.RailCarTypeID" selected="true">@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.RailCarTypeID">@item.Name</option>
+                }
+            }
+        </select>
+    </label>
+
+   
+    <label>
+        Enter a Partial Reporting Mark:
+        <input type="text" asp-for="SearchArg"
+               placeholder="Enter the Partial Reporting Mark" required />
+    </label>
+    <br />
+   
+    @if (Model.RollingStockInfo != null)
+    {
+        if (Model.RollingStockInfo.Count() == 0)
+        {
+            <p style="color: red; font-weight: bold; font-size: large">
+                There are no territories matching your search request
+            </p>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>Reporting Mark</th>
+                        <th>Owner</th>
+                        <th>Capacity</th>
+                        <th>InService</th>
+                    </tr>
+                </thead>
+                <tbody>   
+                    @foreach (var item in Model.RollingStocks)
+                    {
+                        <tr>
+                            <td>@item.ReportingMark</td>
+                            <td>@item.Owner</td>
+                            <td>@item.Capacity</td>
+                            <td>@item.InService</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+    <button type="submit" asp-page-handler="FetchRail">Fetch by ID</button>
+    <button type="submit" asp-page-handler="Fetch">Fetch by Partial</button>
+    <button type="submit" asp-page-handler="Clear"formnovalidate>Clear</button>
+</form>
