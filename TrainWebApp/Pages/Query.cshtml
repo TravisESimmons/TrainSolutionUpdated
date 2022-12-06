@@ -1,30 +1,25 @@
-﻿@page "{SearchArg?}/{searchid?}"
+﻿@page "{searcharg?}/{RailCarTypeID?}"
 @model TrainWebApp.Pages.QueryModel
 @{
     ViewData["Title"] = "Query";
 }
-<h1>Queries for Train Watch</h1>
-<p></p>
+
+<h1>This is the Query Page!!</h1>
+
+<p>@Model.Feedback</p>
+
 <form method="post">
-
-   
     <label>
-        Search by Reporting Mark
-           
-        <input type="text" asp-for="SearchArg"
-               placeholder="Enter the partial rm " required />
+        Enter a Partial Reporting Mark:
+        <input type="text" asp-for="SearchArg" placeholder="enter a partial search" required />
     </label>
-     <br />
+    <br />
 
-        <button type="submit" asp-page-handler="Fetch">Fetch by Partial</button>
-    <button type="submit" asp-page-handler="Clear"formnovalidate>Clear</button>
-   
-   
     @if (Model.RollingStockInfo != null)
     {
         if (Model.RollingStockInfo.Count() == 0)
         {
-            <p style="color: red; font-weight: bold; font-size: large">
+            <p style="color: red; font-weight:bold; font-size: large">
                 There are no Trains matching your search request
             </p>
         }
@@ -32,6 +27,7 @@
         {
             <table>
                 <thead>
+                   
                     <tr>
                         <th>Reporting Mark</th>
                         <th>Owner</th>
@@ -39,21 +35,114 @@
                         <th>InService</th>
                     </tr>
                 </thead>
-                <tbody>   
+                <tbody>
+
                     @foreach (var item in Model.RollingStockInfo)
                     {
                         <tr>
                             <td>@item.ReportingMark</td>
+                            <td>@item.Owner</td>
+                            <td>@item.Capacity</td>
+                            <td>@item.InService</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-                            
+        }
+    }
+    <button type="submit" asp-page-handler="Fetch">Fetch </button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="New" formnovalidate>New to CRUD</button>
+</form>
 
+<br />
+
+@*
+<form method="post">
+    <label>
+        Select a car type:
+        <select asp-for="RailCarTypeID">
+
+            <option value="0">select...</option>
+            @foreach (var item in Model.RailCarInfo)
+            {
+
+                if (item.RailCarTypeID == Model.RailCarTypeID)
+                {
+                    <option value="@item.RailCarTypeID" selected="true">@item.Name</option>
+                }
+                else
+                {
+                    <option value="@item.RailCarTypeID">@item.Name</option>
+                }
+            }
+        </select>
+    </label>
+    @*
+    @if (Model.RollingStockInfoDrop != null)
+    {
+        if (Model.RollingStockInfoDrop.Count() == 0)
+        {
+            <p style="color: blueviolet; font-weight:bold; font-size: large">
+                There are no rail car types matching your search request
+            </p>
+        }
+        else
+        {
+            <table>
+                <thead>
+                    
+                    <tr>
+                        <th>Reporting Mark</th>
+                        <th>Owner</th>
+                        <th>Capacity</th>
+                        <th>InService</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.RollingStockInfoDrop)
+                    {
+                        <tr>
+                            <td>@item.ReportingMark</td>
+                            <td>@item.Owner</td>
+                            <td>@item.Capacity</td>
+                            <td>@item.InService</td>
                         </tr>
                     }
                 </tbody>
             </table>
         }
     }
-   
-    
+
+
+
+    <button type="submit" asp-page-handler="Select" formnovalidate>Select by Description</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="ClearQuery" formnovalidate>Clear</button>&nbsp;&nbsp;
+    <button type="submit" asp-page-handler="New" formnovalidate>New Product</button>
+
+
 </form>
+@*
+<tfoot>
+    <tr>
+        @{
+            foreach (var pageRef in Model.Pager)
+            {
+                if (pageRef == Model.Pager.CurrentPage)
+                {
+                    <b>@pageRef.Text</b>
+                }
+                else
+                {
+                    <a title="Page @pageRef.Page" asp-page="/Query" asp-route-currentpage="@pageRef.Page">@pageRef.Text</a>
+                }
+
+            }
+        }
+    </tr>
+</tfoot>
+   *@
+
 

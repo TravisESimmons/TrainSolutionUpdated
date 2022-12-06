@@ -3,17 +3,29 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TrainWatchSystem.Entities
 {
     public partial class RailCarType
     {
+
+        public RailCarType()
+        {
+            RollingStocks = new HashSet<RollingStock>();
+        }
         
         [Key]
         public int RailCarTypeID { get; set; }
-        public string Name { get; set; }
-        public string Commodity { get; set; }
+        [Required]
 
+        [StringLength(30)]
+        public string Name { get; set; }
+        [Required]
+
+        [StringLength(100)]
+        public string Commodity { get; set; }
+        [InverseProperty("RailCarType")]
         public virtual ICollection<RollingStock> RollingStocks { get; set; }
     }
 }

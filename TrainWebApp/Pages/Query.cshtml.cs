@@ -35,9 +35,6 @@ namespace TrainWebApp.Pages
 
         public string SearchArg { get; set; }
 
-        [BindProperty]
-
-        public int searchid { get; set; }
 
         [BindProperty]
 
@@ -52,7 +49,7 @@ namespace TrainWebApp.Pages
 
         #region Paginator
         //  Desired page size
-        private const int PAGE_SIZE = 25;
+        private const int PAGE_SIZE = 10;
         //  Hold an instance of the Paginator
         public Paginator Pager { get; set; }
         #endregion
@@ -60,7 +57,7 @@ namespace TrainWebApp.Pages
 
         public void OnGet(int? currentPage)
         {
-            
+            RailCarInfo = _trainWatchServices.RailCarTypes();
 
             if (!string.IsNullOrWhiteSpace(SearchArg))
             {
@@ -91,6 +88,11 @@ namespace TrainWebApp.Pages
                 Feedback = "Required:  Search argument is empty";
             }
             return RedirectToPage(new { SearchArg = SearchArg });
+        }
+
+        public IActionResult OnPostNew()
+        {
+            return RedirectToPage("/CRUD");
         }
     }
 }
