@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using TrainWatchSystem.DAL;
 using TrainWatchSystem.Entities;
 
@@ -23,35 +24,42 @@ namespace TrainWatchSystem.BLL
         #region Services: Query
 
 
+        public List <RollingStock> RollingStocks()
 
-        public RollingStock RailCarType_GetByID(int RailCarTypeID)
-        {
-
-
-            RollingStock info = _context.RollingStocks
-                                   .Where(x => x.RailCarTypeID == RailCarTypeID)
-                                   .FirstOrDefault();
-            return info;
-        }
-
-        public RollingStock RailCarType_GetByPartial(string SearchArg)
-        {
-            RollingStock info = (RollingStock)_context.RollingStocks.Where(item => item.ReportingMark.Contains(SearchArg));
-                                                                            
-            return info; 
-
-
-        }
-
-        public List<RailCarType> RailCarList()
-        {
-
-
-            IEnumerable<RailCarType> info = _context.RailCarTypes
-                                   .OrderBy(x => x.Name);
+        { 
+            IEnumerable <RollingStock> info = _context.RollingStocks.OrderBy(x => x.ReportingMark);
             return info.ToList();
 
         }
+
+
+        public List <RollingStock> GetByPartial(string SearchArg, int pageNumber,
+                                                        int pageSize,
+                                                        out int totalCount)
+        {
+            IEnumerable<RollingStock> info = _context.RollingStocks
+                .Where(x => x.ReportingMark.Contains(SearchArg))
+                .OrderBy(x => x.ReportingMark);
+               
+       
+
+            totalCount = info.Count();
+            //  Determine the number of rows to skip
+            //  THis skipped count reflects the rows of the previous pages
+            //  Remember the pagenumber is a natural number (1,2,3,....)
+            //  This needs to be treated as an index (natural number -1)  Zero base
+            //  The number of rows to skip is index * pagesize
+            int skipRows = (pageNumber - 1) * pageSize;
+            //  Return only the required number of rows.
+            //  This will be done using filters belonging to LINQ
+            //  Use the filter .Skip(n) to skip over n rows from the beginning of a collection
+            //  Use the filter .Take(n) to take the next n rows from a collection
+            return info.Skip(skipRows).Take(pageSize).ToList();
+
+            //  This is the return statement that would be used IF no paging is being implemented
+        }
+       
+        
     }
 }
 #endregion
