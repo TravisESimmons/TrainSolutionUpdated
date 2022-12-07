@@ -11,7 +11,7 @@
 <form method="post">
     <label>
         Enter a Partial Reporting Mark:
-        <input type="text" asp-for="SearchArg" placeholder="enter a partial search" required />
+        <input type="text" asp-for="SearchArg" placeholder="Enter a partial search..." required />
     </label>
     <br />
 
@@ -58,13 +58,13 @@
 
 <br />
 
-@*
+
 <form method="post">
     <label>
-        Select a car type:
+        Select a Rail Car Type: 
         <select asp-for="RailCarTypeID">
 
-            <option value="0">select...</option>
+            <option value="0">Select...</option>
             @foreach (var item in Model.RailCarInfo)
             {
 
@@ -79,70 +79,32 @@
             }
         </select>
     </label>
-    @*
-    @if (Model.RollingStockInfoDrop != null)
-    {
-        if (Model.RollingStockInfoDrop.Count() == 0)
-        {
-            <p style="color: blueviolet; font-weight:bold; font-size: large">
-                There are no rail car types matching your search request
-            </p>
-        }
-        else
-        {
-            <table>
-                <thead>
-                    
-                    <tr>
-                        <th>Reporting Mark</th>
-                        <th>Owner</th>
-                        <th>Capacity</th>
-                        <th>InService</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    @foreach (var item in Model.RollingStockInfoDrop)
-                    {
-                        <tr>
-                            <td>@item.ReportingMark</td>
-                            <td>@item.Owner</td>
-                            <td>@item.Capacity</td>
-                            <td>@item.InService</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    }
-
-
-
-    <button type="submit" asp-page-handler="Select" formnovalidate>Select by Description</button>&nbsp;&nbsp;
-    <button type="submit" asp-page-handler="ClearQuery" formnovalidate>Clear</button>&nbsp;&nbsp;
-    <button type="submit" asp-page-handler="New" formnovalidate>New Product</button>
-
-
 </form>
-@*
-<tfoot>
-    <tr>
-        @{
-            foreach (var pageRef in Model.Pager)
-            {
-                if (pageRef == Model.Pager.CurrentPage)
-                {
-                    <b>@pageRef.Text</b>
-                }
-                else
-                {
-                    <a title="Page @pageRef.Page" asp-page="/Query" asp-route-currentpage="@pageRef.Page">@pageRef.Text</a>
-                }
+ 
+ <tfoot>
+                @*  *** ERROR : "Title: Query - Object instance not set " *** 
+                <tr>
+                    @{
 
-            }
-        }
-    </tr>
-</tfoot>
-   *@
+                        foreach (var pageRef in Model.Pager)
+                        {
+                            if (pageRef == Model.Pager.CurrentPage)
+                            {
+                                <b>@pageRef.Text</b>
+                            }
+                            else
+                            {
+
+                                <a title="Page @pageRef.Page"
+               asp-page="/Pages/Query"
+               asp-route-currentpage="@pageRef.Page">
+                                    @pageRef.Text
+                                </a>
+                            }
+                        }
+                    }
+                </tr>
+            </tfoot>
+    *@
 
 
