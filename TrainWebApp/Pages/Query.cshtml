@@ -47,6 +47,34 @@
                         </tr>
                     }
                 </tbody>
+
+                <tfoot>
+                   
+                    <tr>
+                        @{
+
+                            foreach (var pageRef in Model.Pager)
+                            {
+                                if (pageRef == Model.Pager.CurrentPage)
+                                {
+                                    <b>@pageRef.Text</b>
+                                }
+                                else
+                                {
+
+                                    <a title="Page @pageRef.Page"
+                   asp-page="/Pages/Query"
+                   asp-route-currentpage="@pageRef.Page">
+                                        @pageRef.Text
+                                    </a>
+                                }
+                            }
+                        }
+                    </tr>
+                </tfoot>
+
+
+
             </table>
 
         }
@@ -54,6 +82,11 @@
     <button type="submit" asp-page-handler="Fetch">Fetch </button>&nbsp;&nbsp;
     <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>&nbsp;&nbsp;
     <button type="submit" asp-page-handler="New" formnovalidate>New to CRUD</button>
+
+
+
+
+
 </form>
 
 <br />
@@ -79,32 +112,17 @@
             }
         </select>
     </label>
+
+
+
+
+
+
+
+
 </form>
  
- <tfoot>
-                @*  *** ERROR : "Title: Query - Object instance not set " *** 
-                <tr>
-                    @{
-
-                        foreach (var pageRef in Model.Pager)
-                        {
-                            if (pageRef == Model.Pager.CurrentPage)
-                            {
-                                <b>@pageRef.Text</b>
-                            }
-                            else
-                            {
-
-                                <a title="Page @pageRef.Page"
-               asp-page="/Pages/Query"
-               asp-route-currentpage="@pageRef.Page">
-                                    @pageRef.Text
-                                </a>
-                            }
-                        }
-                    }
-                </tr>
-            </tfoot>
-    *@
+ 
+    
 
 

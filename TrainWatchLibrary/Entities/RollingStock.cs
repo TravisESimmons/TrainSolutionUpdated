@@ -15,6 +15,7 @@ namespace TrainWatchSystem.Entities
 
         [StringLength(24)]
         [Unicode(false)]
+        [Required]
         public string ReportingMark { get; set; }
         [Required]
         [StringLength(50)]

@@ -45,6 +45,7 @@
 <label>
     Reporting Mark: 
     <input type="text" asp-for="RollingStockInfo.ReportingMark" readonly data-val="false" />
+    <span asp-validation-for="RollingStockInfo.ReportingMark"></span>
 </label>
 <label>
     Owner:
@@ -85,3 +86,7 @@
     <button type="submit" asp-page-handler="Clear" formnovalidate>Clear</button>
     <button type="submit" asp-page-handler="Search" formnovalidate>Search</button>
 </form>
+
+        @section scripts{
+            <partial name="_ValidationScriptsPartial" /> 
+        }
